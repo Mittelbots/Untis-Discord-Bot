@@ -1,0 +1,30 @@
+{
+  "name": "untis-discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot/index.js",
+  "scripts": {
+    "dev": "nodemon bot/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mittelbots/Untis-Discord-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mittelbots/Untis-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/Mittelbots/Untis-Discord-Bot#readme",
+  "dependencies": {
+    "@discordjs/rest": "^1.1.0",
+    "caller-id": "^0.1.0",
+    "discord-api-types": "^0.37.6",
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.2",
+    "nconf": "^0.12.0",
+    "node-sloc": "^0.2.1",
+    "nodemon": "^2.0.19",
+    "simple-node-logger": "^21.8.12"
+  }
+}
