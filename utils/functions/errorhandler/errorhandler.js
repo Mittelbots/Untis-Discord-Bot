@@ -11,7 +11,7 @@ module.exports.errorhandler = ({err = 'No error passed! ', message = 'No message
         'Line': caller.lineNumber
     }
 
-    if(process.env.ENV) console.log(errObj);
+    if(process.env.ENV) console.log(err, caller.filePath);
 
     else if(fatal && log) log.fatal(errObj);
 

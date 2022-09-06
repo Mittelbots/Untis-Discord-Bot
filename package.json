@@ -25,6 +25,7 @@
     "nconf": "^0.12.0",
     "node-sloc": "^0.2.1",
     "nodemon": "^2.0.19",
-    "simple-node-logger": "^21.8.12"
+    "simple-node-logger": "^21.8.12",
+    "webuntis": "^1.22.1"
   }
 }

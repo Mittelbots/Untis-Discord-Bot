@@ -2,22 +2,30 @@ const {
   Client,
   Options,
   GatewayIntentBits,
-  Collection,
   ActivityType,
   Partials
 } = require("discord.js");
 const {
   SlashCommands
 } = require("../utils/functions/createSlashCommands/createSlashCommands");
-const { errorhandler } = require("../utils/functions/errorhandler/errorhandler");
+const {
+  errorhandler
+} = require("../utils/functions/errorhandler/errorhandler");
 const {
   spawn
 } = require('child_process');
 const version = require('../package.json').version;
 const config = require('../config.json');
-const { delay } = require("../utils/functions/delay/delay");
-const { getLinesOfCode } = require("../utils/functions/getLinesOfCode/getLinesOfCode");
-const { interactionCreate } = require("./events/interactionCreate");
+const {
+  delay
+} = require("../utils/functions/delay/delay");
+const {
+  getLinesOfCode
+} = require("../utils/functions/getLinesOfCode/getLinesOfCode");
+const {
+  interactionCreate
+} = require("./events/interactionCreate");
+const { Untis } = require("../utils/functions/untis/untis");
 require('dotenv').config()
 
 const bot = new Client({
@@ -44,7 +52,7 @@ bot.once('ready', async () => {
   await bot.guilds.fetch().then(async guilds => {
     console.log('Guilds successfully fetched')
     await guilds.forEach(async guild => {
-        await bot.guilds.cache.get(guild.id).members.fetch().then(() => {
+      await bot.guilds.cache.get(guild.id).members.fetch().then(() => {
         console.log('Members successfully fetched')
       })
     });
@@ -63,7 +71,10 @@ bot.once('ready', async () => {
         name: config.activity.name + ' | v' + bot.version + codeLines,
         type: ActivityType.Watching,
       });
-      errorhandler({err: '------------BOT ACTIVITY SUCCESSFULLY STARTED------------' + new Date(), fatal: false});
+      errorhandler({
+        err: '------------BOT ACTIVITY SUCCESSFULLY STARTED------------' + new Date(),
+        fatal: false
+      });
     });
   }
 
@@ -72,7 +83,19 @@ bot.once('ready', async () => {
   })
 
   console.log(`****Ready! Logged in as  ${bot.user.tag}! I'm on ${bot.guilds.cache.size} Server(s)****`);
-  errorhandler({err: '------------BOT SUCCESSFULLY STARTED------------' + new Date(), fatal: false});
+  errorhandler({
+    err: '------------BOT SUCCESSFULLY STARTED------------' + new Date(),
+    fatal: false
+  });
+
+  const untis = new Untis();
+
+  await untis.setSchoolDates(['mo', 'di']);
+
+  const date = await untis.getDays();
+
+  console.log(await untis.compare());
+
 });
 
 bot.login(process.env.BOT_TOKEN);
