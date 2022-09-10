@@ -25,8 +25,12 @@ const {
 const {
   interactionCreate
 } = require("./events/interactionCreate");
-const { Untis } = require("../utils/functions/untis/untis");
+const { watchTimetable } = require("../utils/functions/untis/watchTimetable");
 require('dotenv').config()
+
+
+// MISC
+console.clear();
 
 const bot = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessageReactions],
@@ -88,13 +92,8 @@ bot.once('ready', async () => {
     fatal: false
   });
 
-  const untis = new Untis();
+  watchTimetable();
 
-  await untis.setSchoolDates(['mo', 'di']);
-
-  const date = await untis.getDays();
-
-  console.log(await untis.compare());
 
 });
 
