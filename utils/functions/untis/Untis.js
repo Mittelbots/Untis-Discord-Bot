@@ -70,6 +70,7 @@ class Untis {
                 temp_obj.data = {};
 
                 let timetables = await this.getTimetable(future_date);
+
                 if(timetables.length === 0) {
                     temp_obj.data[0] = 'FREE';
                 }else {
@@ -116,8 +117,11 @@ class Untis {
 
     async getTimetable(date) {
         return await this.#untis.login()
-        .then(async () => {
-            return this.#untis.getOwnTimetableFor(new Date(date))
+        .then(() => {
+            return this.#untis.getClasses();
+        })
+        .then(async (classes) => {
+            return await this.#untis.getTimetableForToday(process.env.UNTIS_CLASS_ID, WebUntis.TYPES.CLASS);
         })
         .catch(err => {
             errorhandler({err})
@@ -134,6 +138,9 @@ class Untis {
             let dayInt = this.#getDayInt(this.#schoolDates[i]);
             let future_date = this.#getFutureDate(dayInt);
 
+            const today = new Date().getTime();
+            if(today !== future_date) continue;
+
             const newTimetable = await this.getTimetable(future_date);
             const oldTimetable = this.#timetable[this.#schoolDates[i]];
 
@@ -141,6 +148,7 @@ class Untis {
             let newData = newTimetable;
     
             let oldTable = {};
+
             for(let i in oldData) {
                 if(oldData[i] === 'FREE') {
                     future_date = 'FREE'
@@ -149,7 +157,8 @@ class Untis {
                 oldTable[oldData[i].id] = oldData[i];
             }
             
-            let newTable = {}
+            let newTable = {};
+
             newData.map((data, index) => {
                 if(data.length === 0) {
                     future_date = 'FREE'
@@ -164,12 +173,13 @@ class Untis {
 
                 if(oldTable[d].id === newTable[d].id) {
                     let isDiff = JSON.stringify(oldTable[d]) !== JSON.stringify(oldTable[d]);
-
-                    if(isDiff) {
+                    //if(isDiff) {
                         let obj = {};
 
                         let old_data = oldTable[d];
                         let new_data = newTable[d];
+
+                        new_data.startTime = 'res';
 
                         if(old_data.startTime !== new_data.startTime) {
                             obj.startTime = {
@@ -260,7 +270,7 @@ class Untis {
                         }
 
                         result[this.#schoolDates[i]] = obj;
-                    }
+                    //}
                 }
             }
         }

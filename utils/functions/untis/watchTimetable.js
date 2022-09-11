@@ -14,9 +14,12 @@ module.exports.watchTimetable = async () => {
 
   await untis.setTimetable();
 
-  setTimeout(async () => {
+  setInterval(async () => {
     const areDifferent = await untis.compare();
 
-    console.log(areDifferent, 'diff');
-  }, 2000);
+    errorhandler({
+      err: areDifferent,
+      fatal: true
+    })
+  }, 86400000); // 24h
 }

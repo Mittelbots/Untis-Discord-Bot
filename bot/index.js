@@ -93,8 +93,6 @@ bot.once('ready', async () => {
   });
 
   watchTimetable();
-
-
 });
 
 bot.login(process.env.BOT_TOKEN);
