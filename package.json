@@ -4,6 +4,7 @@
   "description": "",
   "main": "bot/index.js",
   "scripts": {
+    "prod": "pm2 start bot/index.js --env=prod",
     "dev": "nodemon bot/index.js"
   },
   "repository": {
